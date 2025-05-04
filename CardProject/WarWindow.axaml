@@ -1,0 +1,33 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		x:Class="CardProject.WarWindow"
+		Title="War Card Game" Width="500" Height="400">
+
+	<Grid RowDefinitions="Auto,*,Auto" Margin="20">
+		<TextBlock Grid.Row="0" Text="War Card Game" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+		<Grid Grid.Row="1" RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,*">
+			<TextBlock Grid.Row="0" Grid.Column="0" x:Name="PlayerDeckCount" Text="Player Cards : 26" Margin="5"/>
+			<TextBlock Grid.Row="1" Grid.Column="0" x:Name="ComputerDeckCount" Text="Computer Cards : 26" Margin="5"/>
+
+			<Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10" Padding="10" Width="150" Height="100">
+				<TextBlock x:Name="PlayerCard" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+
+			<Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="10" Padding="10" Width="150" Height="100">
+				<TextBlock x:Name="ComputerCard" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+			
+			<TextBlock Grid.Row="2" Grid.Column="0" Text="Your Card" HorizontalAlignment="Center" Margin="5"/>
+			<TextBlock Grid.Row="2" Grid.Column="1" Text="Computers Card" HorizontalAlignment="Center" Margin="5"/>
+			<TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ResultBox" HorizontalAlignment="Center" FontWeight="Bold" Margin="0,20,0,0"/>
+			
+		</Grid>
+		
+		<Button Grid.Row="2" x:Name="DrawButton" Content="Draw" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+		
+	</Grid>
+	
+</Window>

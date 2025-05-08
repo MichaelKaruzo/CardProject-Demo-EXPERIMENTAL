@@ -2,7 +2,13 @@ using Avalonia.Controls;
 using Avalonia;
 using Avalonia.Markup.Xaml;
 using System;
+using System.Net;
 using System.Threading.Tasks;
+using System.Net.Http;
+using static System.Net.WebRequestMethods;
+using System.Text;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace CardProject
 {
@@ -30,7 +36,6 @@ namespace CardProject
             string Username = UserNameTextBox.Text;
             string Password = PasswordTextBox.Text;
 
-            //BackEnd
 
             bool CheckIfAuthorized = await AuthorizeUser(Username, Password);
 
@@ -45,8 +50,20 @@ namespace CardProject
         }
         private async Task<bool> AuthorizeUser(string username,string password)
         {
-            //Backend shit
-            return true;
+            HttpClient client = new() { BaseAddress = new Uri("http://localhost:2137") };
+            using StringContent jsonContent = new(
+            JsonSerializer.Serialize(new
+            {
+                username = username,
+                password = password,
+            }),
+            Encoding.UTF8,
+            "application/json");
+
+            using HttpResponseMessage responseMessage = await client.PostAsync("/auth/login",jsonContent);
+            
+            if (responseMessage != null && responseMessage.StatusCode==HttpStatusCode.OK) { return true; }
+            else { return false; }
         }
 
         private void WhiteJackButton_Click(object sender,Avalonia.Interactivity.RoutedEventArgs e)

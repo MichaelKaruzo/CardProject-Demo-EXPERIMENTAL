@@ -1,0 +1,85 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CardProject.PokerWindow"
+        Width="850" Height="600" Title="Texas Hold'em Poker, aye?">
+
+	<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Margin="20">
+
+		<!-- Tytuł et start -->
+		<TextBlock Grid.Row="0" Text="Poker Hold'em [TEXAN STYLE], Yyyyy HA Partner?"
+                   FontStyle="Normal" FontFamily="Arial" FontSize="20"
+                   HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+		<Button Grid.Row="0" x:Name="game_start" Content="INICIENTIA"
+                HorizontalAlignment="Center" Margin="0,40,0,0"/>
+
+		<!-- Karty wspólne (5 kart) -->
+		<Grid Grid.Row="1" ColumnDefinitions="*,*,*,*,*">
+			<Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="card_flip1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+			<Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="card_flip2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+			<Border Grid.Column="2" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="card_flip3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+			<Border Grid.Column="3" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="card_flip4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+			<Border Grid.Column="4" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="card_flip5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+		</Grid>
+
+		<!-- Karty wspólne VOL.2 -->
+		<Grid Grid.Row="2" ColumnDefinitions="*,*,*,*,*">
+			<TextBlock Grid.Column="0" Text="NO#1" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="1" Text="NO#2" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="2" Text="NO#3" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="3" Text="NO#4" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="4" Text="NO#5" HorizontalAlignment="Center"/>
+		</Grid>
+
+		<!-- Karty gracza -->
+		<Grid Grid.Row="3" ColumnDefinitions="*,*">
+			<Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="player_card1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+			<Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="10" Width="100" Height="150">
+				<TextBlock x:Name="player_card2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+			</Border>
+		</Grid>
+
+		<!-- Karty gracza VOL.2 -->
+		<Grid Grid.Row="4" ColumnDefinitions="*,*">
+			<TextBlock Grid.Column="0" Text="PLAYER CARD #1" HorizontalAlignment="Center"/>
+			<TextBlock Grid.Column="1" Text="PLAYER CARD #2" HorizontalAlignment="Center"/>
+		</Grid>
+
+		<!-- Przyciski -->
+		<StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" Spacing="20">
+			<Button x:Name="call_button" Content="PUGNA"/>
+			<!-- https://imgur.com/gallery/more-3vak2sB -->
+			<Button x:Name="fold_button" Content="CEDERE"/>
+			<!--"gg go next"-->
+			<Button x:Name="raise_button" Content="AMPLIUS"/>
+			<!-- na tera cart evaluation action type of deal-->
+		</StackPanel>
+
+		<!-- Komunikat akcji -->
+		<TextBlock Grid.Row="6" x:Name="logBox"
+				   FontFamily="Consolas" FontSize="14"
+				   HorizontalAlignment="Center" Margin="0,10,0,0"
+				   Text="Ready for action, partner!" />
+
+		<!-- Informacja o układzie (hope my knowegle's sufficient) (makin it I did indeed realise how far from knowing how poker exacly works I m ;-< ) -->
+		<TextBlock Grid.Row="7" x:Name="handInfo"
+				   FontFamily="Consolas" FontSize="14"
+				   HorizontalAlignment="Center" Margin="0,10,0,0"
+				   Text="(Układ pojawi się po riverze)" />
+
+
+	</Grid>
+</Window>
+

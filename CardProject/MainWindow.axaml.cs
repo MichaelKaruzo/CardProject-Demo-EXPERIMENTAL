@@ -14,9 +14,16 @@ namespace CardProject
 {
     public partial class MainWindow : Window
     {
+        public Uri clientUri;
+        public HttpClient client;
+        public CookieContainer cookies;
+        public string loggedInUser;
         public MainWindow()
         {
+
             InitializeComponent();
+            clientUri = new Uri("http://localhost:2137");
+            client = new(){ BaseAddress = clientUri };
         }
 
         protected override void OnOpened(EventArgs e)
@@ -29,8 +36,33 @@ namespace CardProject
             WarButton.Click += WarButton_Click;
             PokerButton.Click += PokerButton_Click;
             HistoryButton.Click += HistoryButton_Click;
+            RegisterButton.Click += RegisterButton_Click;
         }
+        private async void RegisterButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            string Username = UserNameTextBox.Text;
+            string Password = PasswordTextBox.Text;
 
+
+            using StringContent jsonContent = new(
+            JsonSerializer.Serialize(new
+            {
+                username = Username,
+                password = Password,
+            }),
+            Encoding.UTF8,
+            "application/json");
+
+            using HttpResponseMessage responseMessage = await client.PostAsync("/auth/register", jsonContent);
+
+            if (responseMessage != null && responseMessage.StatusCode == HttpStatusCode.OK)
+            {
+                loggedInUser = Username;
+                GameSelectionPanel.IsVisible = true;
+                LoginPanel.IsVisible = false;
+            }
+            else { Console.WriteLine("Username Already exists"); }
+        }
         private async void LoginButton_Click(object sender,Avalonia.Interactivity.RoutedEventArgs e)
         {
             string Username = UserNameTextBox.Text;
@@ -42,6 +74,7 @@ namespace CardProject
             if( CheckIfAuthorized )
             {
                 GameSelectionPanel.IsVisible = true;
+                LoginPanel.IsVisible = false;
             }
             else
             {
@@ -50,7 +83,7 @@ namespace CardProject
         }
         private async Task<bool> AuthorizeUser(string username,string password)
         {
-            HttpClient client = new() { BaseAddress = new Uri("http://localhost:2137") };
+
             using StringContent jsonContent = new(
             JsonSerializer.Serialize(new
             {
@@ -62,15 +95,17 @@ namespace CardProject
 
             using HttpResponseMessage responseMessage = await client.PostAsync("/auth/login",jsonContent);
             
-            if (responseMessage != null && responseMessage.StatusCode==HttpStatusCode.OK) { return true; }
+            if (responseMessage != null && responseMessage.StatusCode==HttpStatusCode.OK) { 
+                return true;
+                loggedInUser = username;
+            }
             else { return false; }
         }
 
         private void WhiteJackButton_Click(object sender,Avalonia.Interactivity.RoutedEventArgs e)
         {
-            //var WhiteJackWindow = new WhiteJackWindow();
-            //WhiteJackWindow.Show();
-
+            var WhiteJackWindow = new WhiteJackWindow() { LoggedInUser = loggedInUser};
+            WhiteJackWindow.Show();
             Console.WriteLine("Worky!");
         }
         private void WarButton_Click(object sender,Avalonia.Interactivity.RoutedEventArgs e)
@@ -87,8 +122,8 @@ namespace CardProject
 
         private void PokerButton_Click(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            //var PokerWindow = new PokerWindow();
-            //PokerWindow.Show();
+            var PokerWindow = new PokerWindow();
+            PokerWindow.Show();
 
             Console.WriteLine("Worky!");
         }
